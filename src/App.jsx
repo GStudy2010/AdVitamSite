@@ -1,12 +1,6 @@
-// import { useState } from 'react'
-import './App.css'
+import AdVitam from "./AdVitam";
 
 function App() {
-  return(
-    <div>
-      <h1> Hello world </h1>
-    </div>
-  )
+  return <AdVitam />;
 }
-
-export default App
+export default App;
