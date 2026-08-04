@@ -301,6 +301,98 @@ const styles = `
     font-weight: 300;
   }
 
+  .adv-help {
+    padding: 5rem 3rem;
+    background: #F7F4EE;
+  }
+
+  .adv-help-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .adv-help h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1E2D40;
+    margin-bottom: 1.4rem;
+    max-width: 460px;
+  }
+
+  .adv-help-col p {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: #3a4f63;
+    font-weight: 300;
+    margin-bottom: 1.1rem;
+  }
+
+  .adv-help-panel {
+    background: #fff;
+    border: 1px solid rgba(30,45,64,0.1);
+    border-radius: 2px;
+    padding: 2.2rem 2rem;
+  }
+
+  .adv-help-panel-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1E2D40;
+    margin-bottom: 1.3rem;
+  }
+
+  .adv-question-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .adv-question-list li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #3a4f63;
+    font-weight: 300;
+  }
+
+  .adv-question-mark {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #C9A96E;
+    transform: translateY(-3px);
+  }
+
+  .adv-diagnostics {
+    margin-top: 2.4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(30,45,64,0.08);
+  }
+
+  .adv-diagnostics-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7A9E7E;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+
+  .adv-diagnostics p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: #3a4f63;
+    font-weight: 300;
+  }
+
   .adv-about {
     padding: 5rem 3rem;
     display: flex;
@@ -310,7 +402,7 @@ const styles = `
     color: #F7F4EE;
   }
 
-  .adv-about-text { max-width: 540px; }
+  .adv-about-text { max-width: 620px; }
 
   .adv-about .adv-section-label { color: #C9A96E; }
 
@@ -328,6 +420,28 @@ const styles = `
     color: rgba(247,244,238,0.75);
     font-weight: 300;
     margin-bottom: 1rem;
+  }
+
+  .adv-about-cred {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .adv-about-cred-mark {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #7A9E7E;
+    flex-shrink: 0;
+  }
+
+  .adv-about-cred span {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: rgba(247,244,238,0.75);
+    font-weight: 300;
   }
 
   .adv-about-name {
@@ -378,7 +492,7 @@ const styles = `
     justify-content: center;
     gap: 3rem;
     flex-wrap: wrap;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
 
   .adv-contact-item {
@@ -399,6 +513,40 @@ const styles = `
   .adv-contact-item-value {
     font-size: 0.95rem;
     color: #1E2D40;
+  }
+
+  .adv-locations {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .adv-location-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid rgba(30,45,64,0.15);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    color: #1E2D40;
+    background: #fff;
+  }
+
+  .adv-location-pill span.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7A9E7E;
+  }
+
+  .adv-locations-note {
+    font-size: 0.85rem;
+    color: #6b7d90;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
   }
 
   .adv-footer {
@@ -422,17 +570,39 @@ const styles = `
     letter-spacing: 0.04em;
   }
 
+  @media (max-width: 900px) {
+    .adv-help-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+
   @media (max-width: 640px) {
     .adv-nav { padding: 1rem 1.5rem; }
     .adv-nav-links { display: none; }
     .adv-hero { flex-direction: column; padding: 2.5rem 1.5rem; min-height: auto; }
     .adv-breath { width: 200px; height: 200px; }
-    .adv-services, .adv-contact { padding: 3.5rem 1.5rem; }
+    .adv-services, .adv-contact, .adv-help { padding: 3.5rem 1.5rem; }
     .adv-about { flex-direction: column; padding: 3.5rem 1.5rem; gap: 2rem; }
     .adv-footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.2rem 1.5rem; }
     .adv-divider { margin-left: 1.5rem; }
   }
 `;
+
+const reflectionQuestions = [
+  "Co spowodowało poszukiwanie pomocy?",
+  "Jakiego obszaru dotyczą trudności?",
+  "Jakie cechy utrudniają funkcjonowanie?",
+  "Jak można rozumieć te trudności?",
+  "Co się wydarzy, jeśli nie skorzystam z pomocy?",
+  "Co chcę zmienić?",
+];
+
+const credentials = [
+  "Psycholog, absolwentka Uniwersytetu Wrocławskiego",
+  "Dyplomowany psychoterapeuta psychodynamiczny",
+  "Ukończony dwuletni podyplomowy Kurs Psychoterapii TFP w Międzynarodowej Szkole Psychoterapii Psychodynamicznej",
+  "Staż kliniczny w Wojewódzkim Szpitalu dla Nerwowo i Psychicznie Chorych w Lubiążu",
+  "Czynny członek Polskiego Towarzystwa Psychoterapii Psychodynamicznej",
+  "Praca poddawana stałej superwizji",
+];
 
 export default function AdVitam() {
   useEffect(() => {
@@ -467,6 +637,7 @@ export default function AdVitam() {
         </a>
         <ul className="adv-nav-links">
           <li><a href="#oferta" onClick={(e) => handleNavClick(e, "#oferta")}>Oferta</a></li>
+          <li><a href="#pomoc" onClick={(e) => handleNavClick(e, "#pomoc")}>W czym pomagam</a></li>
           <li><a href="#o-mnie" onClick={(e) => handleNavClick(e, "#o-mnie")}>O mnie</a></li>
           <li><a href="#kontakt" onClick={(e) => handleNavClick(e, "#kontakt")}>Kontakt</a></li>
         </ul>
@@ -518,6 +689,14 @@ export default function AdVitam() {
               title: "Relacje i komunikacja",
               desc: "Praca nad trudnościami w relacjach z bliskimi, w pracy i z samym sobą.",
             },
+            {
+              title: "Zaburzenia osobowości",
+              desc: "Leczenie trudności leżących u źródła objawów lękowych, zaburzeń nastroju i problemów w relacjach.",
+            },
+            {
+              title: "Diagnostyka",
+              desc: "Diagnostyka ADHD u osób dorosłych oraz diagnostyka osobowości przy użyciu testu MMPI-2.",
+            },
           ].map((card) => (
             <div className="adv-card" key={card.title}>
               <div className="adv-card-dot" />
@@ -528,19 +707,86 @@ export default function AdVitam() {
         </div>
       </section>
 
+      <section className="adv-help" id="pomoc">
+        <div className="adv-help-grid">
+          <div className="adv-help-col">
+            <p className="adv-section-label">W czym i jak pomagam</p>
+            <h2>Wsparcie, kiedy dotychczasowe sposoby radzenia sobie nie wystarczają</h2>
+            <p>
+              Czy oferowana przeze mnie pomoc jest konieczna? Nie, ale są momenty, kiedy
+              warto ją rozważyć — obniżony nastrój, zdiagnozowana depresja, lęk, problemy
+              ze snem, dolegliwości ciała, które nie znajdują potwierdzenia w żadnej
+              chorobie somatycznej. To sytuacje, w których dotychczasowe doświadczenie,
+              wsparcie bliskich i własne starania nie przyniosły ulgi w bólu.
+            </p>
+            <p>
+              Pracuję z osobami, których cierpienie może mieć różne źródło, niekiedy
+              trudne dla nich samych do zidentyfikowania — z osobami przeżywającymi
+              utratę bliskiej osoby lub własnego zdrowia, doświadczającymi kryzysu
+              w związku, borykającymi się z trudnościami rodzinnymi lub wychowawczymi.
+              Towarzyszę też tym, którzy pragną lepiej rozumieć siebie i bardziej
+              świadomie kierować swoim życiem.
+            </p>
+            <p>
+              Niezależnie od tego, z czym się borykamy, każdy z nas ma osobowość —
+              to w niej zapisany jest sposób rozumienia siebie, świata i innych ludzi.
+              Zajmuję się między innymi leczeniem zaburzeń osobowości, które leżą
+              u źródła wielu symptomów, takich jak lęk, zaburzenia nastroju czy
+              trudności w relacjach interpersonalnych.
+            </p>
+          </div>
+          <div className="adv-help-panel">
+            <p className="adv-help-panel-title">Pytania, które zadajemy sobie wspólnie</p>
+            <ul className="adv-question-list">
+              {reflectionQuestions.map((q) => (
+                <li key={q}>
+                  <span className="adv-question-mark" />
+                  <span>{q}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="adv-diagnostics">
+              <p className="adv-diagnostics-title">Formy pomocy</p>
+              <p>
+                Proponuję różne formy wsparcia dla osób dorosłych — od psychoedukacji
+                i porady psychologicznej, przez konsultacje, po psychoterapię
+                indywidualną w nurcie psychodynamicznym. Każdy proces ma swój
+                indywidualny kształt, dopasowany do potrzeb i głębokości trudności.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="adv-about" id="o-mnie">
         <div className="adv-about-text">
           <p className="adv-section-label">O mnie</p>
           <h2>Towarzyszę w trudnych momentach</h2>
           <p>
-          Realizuję konsultacje psychologiczne oraz psychoterapię osób dorosłych w obrębie Środowiskowego Centrum Psychiatrii i Psychoterapii CALMA.
+            Jestem psychologiem i dyplomowanym psychoterapeutą psychodynamicznym.
+            Realizuję konsultacje psychologiczne oraz psychoterapię osób dorosłych
+            w ramach Środowiskowego Centrum Psychiatrii i Psychoterapii CALMA
+            w Trzebnicy, a od 2006 roku prowadzę również prywatną praktykę
+            psychoterapeutyczną.
           </p>
           <p>
-          Ukończyłam psychologię na Uniwersytecie Wrocławskim. Od 2002 roku szkoliłam się w obszarze psychoterapii. W pierwszej kolejności był to Krakowski Ośrodek Terapii, a następnie Krakowskie Centrum Psychodynamiczne. Miałam możliwość pracować w Dolnośląskim Centrum Pediatrycznym na Oddziale Psychiatrii Dzieci i Młodzieży, Specjalistycznej Poradni Rodzinnej, Ośrodku Adopcyjnym oraz Dolnośląskim Centrum Psychoterapii. W 2006 roku podjęłam decyzję o założeniu prywatnej praktyki psychoterapeutycznej, w ramach której ściśle współpracowałam z lekarzem psychiatrą. W ramach dalszego pogłębiania wiedzy i gromadzenia doświadczenia odbyłam staż kliniczny w Wojewódzkim Szpitalu dla Nerwowo i Psychicznie Chorych w Lubiążu.
+            Pierwsze zawodowe kroki stawiałam w Dolnośląskim Centrum Pediatrycznym
+            na Oddziale Psychiatrii Dzieci i Młodzieży we Wrocławiu, następnie
+            w Specjalistycznej Poradni Rodzinnej w Katowicach oraz Ośrodku
+            Adopcyjnym we Wrocławiu. Współpracowałam także z Dolnośląskim Centrum
+            Psychoterapii we Wrocławiu.
           </p>
+          <div className="adv-about-cred-list">
+            {credentials.map((c) => (
+              <div className="adv-about-cred" key={c}>
+                <span className="adv-about-cred-mark" />
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
           <div className="adv-about-name">
             <strong>Dominika Gajos</strong>
-            <span>Psycholog · Poradnia AdVitam</span>
+            <span>Psycholog · Psychoterapeuta psychodynamiczny · Poradnia AdVitam</span>
           </div>
         </div>
       </section>
@@ -549,6 +795,16 @@ export default function AdVitam() {
         <p className="adv-section-label">Kontakt</p>
         <h2>Zrób pierwszy krok</h2>
         <p>Pierwsza konsultacja to rozmowa bez zobowiązań. Napisz lub zadzwoń.</p>
+
+        <div className="adv-locations">
+          <span className="adv-location-pill"><span className="dot" />Gabinet we Wrocławiu</span>
+          <span className="adv-location-pill"><span className="dot" />Gabinet w Trzebnicy</span>
+          <span className="adv-location-pill"><span className="dot" />Konsultacje online (ZOOM)</span>
+        </div>
+        <p className="adv-locations-note">
+          W wyjątkowych sytuacjach dostępne są spotkania na platformie ZOOM.
+        </p>
+
         <div className="adv-contact-info">
           <div className="adv-contact-item">
             <span className="adv-contact-item-label">Telefon</span>
@@ -567,7 +823,7 @@ export default function AdVitam() {
 
       <footer className="adv-footer">
         <div className="adv-footer-logo">AdVitam</div>
-        <p>© 2025 Poradnia Psiychologiczna AdVitam · Dominika Gajos</p>
+        <p>© 2025 Poradnia Psychologiczna AdVitam · Dominika Gajos</p>
       </footer>
     </div>
   );
