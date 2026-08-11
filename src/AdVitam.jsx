@@ -636,7 +636,6 @@ export default function AdVitam() {
           </div>
         </a>
         <ul className="adv-nav-links">
-          <li><a href="#oferta" onClick={(e) => handleNavClick(e, "#oferta")}>Oferta</a></li>
           <li><a href="#pomoc" onClick={(e) => handleNavClick(e, "#pomoc")}>W czym pomagam</a></li>
           <li><a href="#o-mnie" onClick={(e) => handleNavClick(e, "#o-mnie")}>O mnie</a></li>
           <li><a href="#kontakt" onClick={(e) => handleNavClick(e, "#kontakt")}>Kontakt</a></li>
@@ -667,45 +666,6 @@ export default function AdVitam() {
       </section>
 
       <div className="adv-divider" />
-
-      <section className="adv-services" id="oferta">
-        <p className="adv-section-label">Czym się zajmuję</p>
-        <h2>Wsparcie dopasowane do Twoich potrzeb</h2>
-        <div className="adv-cards">
-          {[
-            {
-              title: "Psychoterapia indywidualna",
-              desc: "Praca z trudnymi emocjami, kryzysami życiowymi i problemami codziennego funkcjonowania.",
-            },
-            {
-              title: "Lęk i depresja",
-              desc: "Skuteczna pomoc w radzeniu sobie z zaburzeniami nastroju i stanami lękowymi.",
-            },
-            {
-              title: "Stres i wypalenie",
-              desc: "Wsparcie w sytuacjach przeciążenia, wypalenia zawodowego i chronicznego napięcia.",
-            },
-            {
-              title: "Relacje i komunikacja",
-              desc: "Praca nad trudnościami w relacjach z bliskimi, w pracy i z samym sobą.",
-            },
-            {
-              title: "Zaburzenia osobowości",
-              desc: "Leczenie trudności leżących u źródła objawów lękowych, zaburzeń nastroju i problemów w relacjach.",
-            },
-            {
-              title: "Diagnostyka",
-              desc: "Diagnostyka ADHD u osób dorosłych oraz diagnostyka osobowości przy użyciu testu MMPI-2.",
-            },
-          ].map((card) => (
-            <div className="adv-card" key={card.title}>
-              <div className="adv-card-dot" />
-              <h3>{card.title}</h3>
-              <p>{card.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       <section className="adv-help" id="pomoc">
         <div className="adv-help-grid">
@@ -763,31 +723,15 @@ export default function AdVitam() {
           <p className="adv-section-label">O mnie</p>
           <h2>Towarzyszę w trudnych momentach</h2>
           <p>
-            Jestem psychologiem i dyplomowanym psychoterapeutą psychodynamicznym.
-            Realizuję konsultacje psychologiczne oraz psychoterapię osób dorosłych
-            w ramach Środowiskowego Centrum Psychiatrii i Psychoterapii CALMA
-            w Trzebnicy, a od 2006 roku prowadzę również prywatną praktykę
-            psychoterapeutyczną.
+             Ukończyłam psychologię na Uniwersytecie Wrocławskim. Od 2002 roku szkoliłam się w obszarze psychoterapii. W pierwszej kolejności był to Krakowski Ośrodek Terapii, a następnie Krakowskie Centrum Psychodynamiczne. W ramach dalszego pogłębiania wiedzy i gromadzenia doświadczenia odbyłam staż kliniczny w Wojewódzkim Szpitalu dla Nerwowo i Psychicznie Chorych w Lubiążu oraz podjęłam się dwuletniego podyplomowego Kursu Psychoterapii TFP w Międzynarodowej Szkole Psychoterapii Psychodynamicznej.
           </p>
           <p>
-            Pierwsze zawodowe kroki stawiałam w Dolnośląskim Centrum Pediatrycznym
-            na Oddziale Psychiatrii Dzieci i Młodzieży we Wrocławiu, następnie
-            w Specjalistycznej Poradni Rodzinnej w Katowicach oraz Ośrodku
-            Adopcyjnym we Wrocławiu. Współpracowałam także z Dolnośląskim Centrum
-            Psychoterapii we Wrocławiu.
+            Pierwsze zawodowe kroki robiłam w Dolnośląskim Centrum Pediatrycznym na Oddziale Psychiatrii Dzieci i Młodzieży we Wrocławiu. Następnie: Specjalistycznej Poradni Rodzinnej w Katowicach, Ośrodku Adopcyjnym we Wrocławiu. Współpracowałam z Dolnośląskim Centrum Psychoterapii we Wrocławiu oraz Środowiskowym Centrum Psychiatrii i Psychoterapii Calma w Trzebnicy. 
           </p>
-          <div className="adv-about-cred-list">
-            {credentials.map((c) => (
-              <div className="adv-about-cred" key={c}>
-                <span className="adv-about-cred-mark" />
-                <span>{c}</span>
-              </div>
-            ))}
-          </div>
-          <div className="adv-about-name">
-            <strong>Dominika Gajos</strong>
-            <span>Psycholog · Psychoterapeuta psychodynamiczny</span>
-          </div>
+          <p>
+            W 2006 roku podjęłam decyzję o założeniu prywatnej praktyki psychoterapeutycznej. 
+            Jestem czynnym członkiem Polskiego Towarzystwa Psychoterapii Psychodynamicznej. Swoją pracę poddaję stałej superwizji. Proces kształcenia i rozwoju realizuję poprzez zapoznawanie się z literaturą, uczestnictwo w konferencjach, seminariach oraz własną psychoterapię. W pracy kieruję się kodeksem etyczno-zawodowym psychologa oraz Towarzystwa, do którego należę.
+          </p>
         </div>
       </section>
 
@@ -797,9 +741,8 @@ export default function AdVitam() {
         <p>Pierwsza konsultacja to rozmowa bez zobowiązań. Napisz lub zadzwoń.</p>
 
         <div className="adv-locations">
-          <span className="adv-location-pill"><span className="dot" />Gabinet we Wrocławiu</span>
-          <span className="adv-location-pill"><span className="dot" />Gabinet w Trzebnicy</span>
-          <span className="adv-location-pill"><span className="dot" />Konsultacje online (ZOOM)</span>
+          <a href="https://www.google.com/maps/place/Radosna+32%2F4,+53-443+Wroc%C5%82aw/@51.0949449,17.0232628,631m/data=!3m2!1e3!4b1!4m6!3m5!1s0x470fc26962529945:0x9b5d4161e4241891!8m2!3d51.0949449!4d17.0258431!16s%2Fg%2F11nbns3zc8?entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D"><span className="adv-location-pill"><span className="dot" />Gabinet we Wrocławiu</span></a>
+          <a href="https://www.google.com/maps/place/%C5%9Awi%C4%99tej+Jadwigi+7,+55-100+Trzebnica/@51.3079908,17.0637287,157m/data=!3m2!1e3!4b1!4m6!3m5!1s0x470ff25bdf6d155d:0x55e44afce31bfa0d!8m2!3d51.3079908!4d17.0643738!16s%2Fg%2F11j15m5ry7?entry=ttu&g_ep=EgoyMDI2MDgwNS4xIKXMDSoASAFQAw%3D%3D"><span className="adv-location-pill"><span className="dot" />Gabinet w Trzebnicy</span></a>
         </div>
         <p className="adv-locations-note">
           W wyjątkowych sytuacjach dostępne są spotkania na platformie ZOOM.
