@@ -632,7 +632,7 @@ export default function AdVitam() {
           aria-label="Wróć na górę"
         >
           <div className="adv-logo">
-            Ad<span>Vitam</span>
+            Dominika<span> Gajos</span>
           </div>
         </a>
         <ul className="adv-nav-links">
@@ -645,7 +645,7 @@ export default function AdVitam() {
 
       <section className="adv-hero">
         <div className="adv-hero-text">
-          <p className="adv-eyebrow">Poradnia Psychologiczna</p>
+          <p className="adv-eyebrow">Gabinet Psychoterapii</p>
           <h1>
             Przestrzeń, w której<br />
             <em>możesz być sobą</em>
@@ -674,7 +674,7 @@ export default function AdVitam() {
         <div className="adv-cards">
           {[
             {
-              title: "Terapia indywidualna",
+              title: "Psychoterapia indywidualna",
               desc: "Praca z trudnymi emocjami, kryzysami życiowymi i problemami codziennego funkcjonowania.",
             },
             {
@@ -786,7 +786,7 @@ export default function AdVitam() {
           </div>
           <div className="adv-about-name">
             <strong>Dominika Gajos</strong>
-            <span>Psycholog · Psychoterapeuta psychodynamiczny · Poradnia AdVitam</span>
+            <span>Psycholog · Psychoterapeuta psychodynamiczny</span>
           </div>
         </div>
       </section>
@@ -812,18 +812,14 @@ export default function AdVitam() {
           </div>
           <div className="adv-contact-item">
             <span className="adv-contact-item-label">E-mail</span>
-            <span className="adv-contact-item-value">gajos.dominika@gmail.com</span>
-          </div>
-          <div className="adv-contact-item">
-            <span className="adv-contact-item-label">Godziny przyjęć</span>
-            <span className="adv-contact-item-value">Pon – Pt, 9:00–18:00</span>
+            <span className="adv-contact-item-value">gajosdominika78@gmail.com</span>
           </div>
         </div>
       </section>
 
       <footer className="adv-footer">
-        <div className="adv-footer-logo">AdVitam</div>
-        <p>© 2025 Poradnia Psychologiczna AdVitam · Dominika Gajos</p>
+        <div className="adv-footer-logo">Dominika Gajos</div>
+        <p>© Gabinet psychoterapii · Dominika Gajos</p>
       </footer>
     </div>
   );
