@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generator częstotliwości 20–20 000 Hz</title>
+<style>
+:root{--bg:#e9edf0;--panel:#f6f8f9;--ink:#16222b;--mute:#5d6b75;--line:#c5ced5;--scope:#10181d;--grid:#22313a;--L:#2f7fd1;--R:#e0612f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1317;--panel:#151d23;--ink:#e3eaee;--mute:#8b9aa5;--line:#2a3640;--scope:#070b0e;--grid:#1a252c;--L:#5aa6f0;--R:#f08455}}
+:root[data-theme="dark"]{--bg:#0d1317;--panel:#151d23;--ink:#e3eaee;--mute:#8b9aa5;--line:#2a3640;--scope:#070b0e;--grid:#1a252c;--L:#5aa6f0;--R:#f08455}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px}
+h1{font:600 1.5rem/1.2 Georgia,"Times New Roman",serif;margin:0}
+.sub{color:var(--mute);font-size:.9rem;margin:2px 0 0}
+button{font:inherit;color:inherit;cursor:pointer}
+.master{background:var(--ink);color:var(--bg);border:0;border-radius:8px;padding:10px 22px;font-weight:600}
+.master[aria-pressed="true"]{background:#c0392b;color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.ch{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:8px;padding:14px}
+.ch[data-ch="L"]{--c:var(--L)}.ch[data-ch="R"]{--c:var(--R)}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+h2{font-size:1.05rem;margin:0;color:var(--c)}
+.mute{border:1px solid var(--line);background:none;border-radius:6px;padding:3px 10px;font-size:.85rem}
+.mute[aria-pressed="true"]{background:var(--c);color:#fff;border-color:var(--c)}
+canvas{width:100%;height:140px;display:block;background:var(--scope);border-radius:6px}
+.hz{display:flex;align-items:baseline;gap:8px;margin:12px 0 4px}
+.hz input{width:7.5ch;font:600 1.8rem/1 ui-monospace,Consolas,monospace;background:none;border:0;border-bottom:2px solid var(--c);color:var(--ink);padding:0;text-align:right}
+.hz span{color:var(--mute)}
+.fine{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.fine button{border:1px solid var(--line);background:none;border-radius:6px;padding:2px 8px;font-size:.8rem}
+input[type=range]{width:100%;accent-color:var(--c);margin:6px 0}
+.row{display:flex;align-items:center;gap:10px;font-size:.9rem;color:var(--mute)}
+.row input{flex:1}
+.row b{width:4ch;text-align:right;color:var(--ink);font-weight:500}
+.wf{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+.wf button{border:1px solid var(--line);background:none;border-radius:6px;padding:6px 2px;font-size:.85rem}
+.wf button[aria-checked="true"]{background:var(--c);color:#fff;border-color:var(--c)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--c,var(--ink));outline-offset:2px}
+.note{color:var(--mute);font-size:.85rem;margin-top:18px}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div>
+    <h1>Generator częstotliwości</h1>
+    <p class="sub">Osobne przebiegi dla lewego i prawego kanału, 20–20 000 Hz. Najlepiej używać słuchawek.</p>
+  </div>
+  <button class="master" id="master" aria-pressed="false">Włącz dźwięk</button>
+</header>
+<div class="grid" id="grid"></div>
+<p class="note">Zacznij od niskiej głośności. Fala prostokątna i piła brzmią głośniej niż sinus przy tym samym ustawieniu. Wysokie tony mogą być nieprzyjemne i szkodliwe dla słuchu.</p>
+</main>
+<script>
+const WAVES=[["sine","Sinus"],["triangle","Trójkąt"],["sawtooth","Piła"],["square","Prostokąt"]];
+const grid=document.getElementById("grid");
+let ctx=null,merger=null,running=false;
+const st={};
+const toF=v=>20*Math.pow(1000,v/1000);
+const toV=f=>1000*Math.log(f/20)/Math.log(1000);
+const clamp=f=>Math.min(20000,Math.max(20,f));
+
+["L","R"].forEach((id,i)=>{
+  const name=id==="L"?"Lewy kanał":"Prawy kanał";
+  const s=st[id]={idx:i,freq:id==="L"?440:442,type:"sine",vol:0.15,muted:false};
+  const el=document.createElement("section");
+  el.className="ch";el.dataset.ch=id;
+  el.innerHTML=`
+  <div class="top"><h2>${name}</h2><button class="mute" aria-pressed="false">Wycisz</button></div>
+  <canvas></canvas>
+  <div class="hz"><input type="number" min="20" max="20000" step="1" aria-label="Częstotliwość ${name}"><span>Hz</span>
+    <div class="fine"><button data-d="-100">−100</button><button data-d="-10">−10</button><button data-d="-1">−1</button><button data-d="1">+1</button><button data-d="10">+10</button><button data-d="100">+100</button></div></div>
+  <input type="range" min="0" max="1000" step="1" class="fr" aria-label="Suwak częstotliwości ${name}">
+  <div class="wf" role="radiogroup" aria-label="Kształt fali ${name}">${WAVES.map(([k,n])=>`<button role="radio" data-w="${k}">${n}</button>`).join("")}</div>
+  <div class="row">Głośność<input type="range" min="0" max="100" class="vol" aria-label="Głośność ${name}"><b></b></div>`;
+  grid.appendChild(el);
+  s.el=el;s.canvas=el.querySelector("canvas");s.num=el.querySelector(".hz input");s.fr=el.querySelector(".fr");
+  s.vol_el=el.querySelector(".vol");s.vol_lab=el.querySelector(".row b");s.mute=el.querySelector(".mute");
+  s.fr.oninput=()=>setFreq(s,toF(+s.fr.value));
+  s.num.onchange=()=>setFreq(s,+s.num.value||440);
+  el.querySelectorAll(".fine button").forEach(b=>b.onclick=()=>setFreq(s,s.freq+ +b.dataset.d));
+  el.querySelectorAll(".wf button").forEach(b=>b.onclick=()=>{s.type=b.dataset.w;if(s.osc)s.osc.type=s.type;paintWave(s)});
+  s.vol_el.oninput=()=>{s.vol=s.vol_el.value/100;apply(s);paintVol(s)};
+  s.mute.onclick=()=>{s.muted=!s.muted;s.mute.setAttribute("aria-pressed",s.muted);apply(s)};
+  setFreq(s,s.freq);paintWave(s);s.vol_el.value=s.vol*100;paintVol(s);
+});
+
+function setFreq(s,f){
+  s.freq=Math.round(clamp(f)*100)/100;
+  s.num.value=Math.round(s.freq);
+  s.fr.value=toV(s.freq);
+  if(s.osc)s.osc.frequency.setTargetAtTime(s.freq,ctx.currentTime,0.01);
+}
+function paintWave(s){s.el.querySelectorAll(".wf button").forEach(b=>b.setAttribute("aria-checked",b.dataset.w===s.type))}
+function paintVol(s){s.vol_lab.textContent=Math.round(s.vol*100)+"%"}
+function apply(s){if(s.gain)s.gain.gain.setTargetAtTime(s.muted?0:s.vol,ctx.currentTime,0.02)}
+
+function start(){
+  ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+  if(!merger){merger=ctx.createChannelMerger(2);merger.connect(ctx.destination)}
+  for(const s of Object.values(st)){
+    s.osc=ctx.createOscillator();s.osc.type=s.type;s.osc.frequency.value=s.freq;
+    s.gain=ctx.createGain();s.gain.gain.value=0;
+    s.an=ctx.createAnalyser();s.an.fftSize=8192;s.buf=new Float32Array(s.an.fftSize);
+    s.osc.connect(s.gain);s.gain.connect(s.an);s.an.connect(merger,0,s.idx);
+    s.osc.start();apply(s);
+  }
+  ctx.resume();running=true;
+}
+function stop(){
+  for(const s of Object.values(st)){
+    if(!s.osc)continue;
+    s.gain.gain.setTargetAtTime(0,ctx.currentTime,0.015);
+    const o=s.osc,g=s.gain,a=s.an;
+    setTimeout(()=>{o.stop();o.disconnect();g.disconnect();a.disconnect()},120);
+    s.osc=null;
+  }
+  running=false;
+}
+const master=document.getElementById("master");
+master.onclick=()=>{
+  running?stop():start();
+  master.setAttribute("aria-pressed",running);
+  master.textContent=running?"Wyłącz dźwięk":"Włącz dźwięk";
+};
+
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function draw(){
+  for(const s of Object.values(st)){
+    const c=s.canvas,r=devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;
+    if(c.width!==w*r||c.height!==h*r){c.width=w*r;c.height=h*r}
+    const g=c.getContext("2d");g.setTransform(r,0,0,r,0,0);
+    g.fillStyle=css("--scope");g.fillRect(0,0,w,h);
+    g.strokeStyle=css("--grid");g.lineWidth=1;g.beginPath();
+    for(let i=1;i<8;i++){g.moveTo(i*w/8,0);g.lineTo(i*w/8,h)}
+    for(let i=1;i<4;i++){g.moveTo(0,i*h/4);g.lineTo(w,i*h/4)}
+    g.stroke();
+    g.strokeStyle=css(s.idx?"--R":"--L");g.lineWidth=2;g.lineJoin="round";g.beginPath();
+    if(running&&s.an){
+      s.an.getFloatTimeDomainData(s.buf);
+      const b=s.buf,sr=ctx.sampleRate,per=sr/s.freq;
+      const span=Math.min(Math.floor(per*3),b.length-Math.ceil(per)-2);
+      let st0=0;
+      for(let i=1;i<b.length-span-1&&i<per*1.5+2;i++){if(b[i-1]<0&&b[i]>=0){st0=i;break}}
+      const n=Math.max(span,8),gain=s.muted||s.vol===0?1:Math.min(1/s.vol,1/Math.max(0.001,s.vol)),amp=(h/2-8);
+      for(let k=0;k<n;k++){
+        const v=b[st0+k]*(s.muted||s.vol<0.01?0:1/Math.max(s.vol,0.01));
+        const x=k/(n-1)*w,y=h/2-v*amp;
+        k?g.lineTo(x,y):g.moveTo(x,y);
+      }
+    }else{g.moveTo(0,h/2);g.lineTo(w,h/2)}
+    g.stroke();
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
